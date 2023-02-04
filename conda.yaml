@@ -1,0 +1,16 @@
+name: cash
+channels:
+  - conda-forge
+build_dependencies:
+- pip
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+      - scikit-learn==0.23.2
+      - mlflow>=1.0
+      - pandas
+      - click
+      - sktime
+      - lightgbm
+      - prophet

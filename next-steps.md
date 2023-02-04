@@ -59,12 +59,13 @@ sequenceDiagram
     participant Training Pipelines
     participant Registry
     Note over Training Pipelines: Model <br>Containerization
-    Note over Training Pipelines:  <br/>Orchestrate with <br> Apache Spark <br> + <br> Kubernetes 
+    Note over Training Pipelines:  <br/>Orchestrate with <br> Apache Spark <br> (or Xarray) <br> + <br> Kubernetes 
     Data Layer->>Training Pipelines: Data Ingestion
     Training Pipelines->>Registry: Track models
     Training Pipelines->>Registry: Store artifacts
      
     participant Serving
+    Note over Serving: torchServe
     participant Prediction Pipelines
     Note over Prediction Pipelines: RBMS <br>Storage
     Note over Prediction Pipelines: Forecast <br>Reconciliation<br> Process

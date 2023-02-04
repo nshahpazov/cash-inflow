@@ -1,0 +1,15 @@
+python: "3.8"
+dependencies:
+  - numpy
+  - click
+  - pandas
+  - scipy
+  - scikit-learn
+  - sktime
+  - prophet
+  - lightgbm
+  - matplotlib
+  - mlflow>=1.6
+  - hyperopt
+  - protobuf<4.0.0
+  - openpyxl

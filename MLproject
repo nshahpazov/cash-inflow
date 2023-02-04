@@ -1,0 +1,58 @@
+name: Cash
+python_env: python_env.yaml
+entry_points:
+  process:
+    parameters:
+      input_path: {type: string, default: "data/raw/cash_data.xlsx"}
+      output_path: {type: string, default: "data/processed/cash_data.csv"}
+    command: "python src/preprocess.py {input_path} {output_path}"
+  split:
+    parameters:
+      input_path: {type: string, default: "data/processed/cash_data.csv"}
+      output_x_train_path: {type: string, default: "data/model_input/x_train.csv"}
+      output_y_train_path: {type: string, default: "data/model_input/y_train.csv"}
+      output_x_test_path: {type: string, default: "data/model_input/x_test.csv"}
+      output_y_test_path: {type: string, default: "data/model_input/y_test.csv"}
+      test_size: {type: integer, default: 28}
+    command: "python src/split.py {input_path}
+                                  {output_x_train_path}
+                                  {output_y_train_path}
+                                  {output_x_test_path}
+                                  {output_y_test_path}"
+  
+
+  train:
+    parameters:
+      input_x_train_path: {type: string, default: "data/model_input/x_train.csv"}
+      input_y_train_path: {type: string, default: "data/model_input/y_train.csv"}
+      # determine whether to train for evaluation, hyperparameter tuning or for final training
+      test_size: {type: integer, default: 28}
+      n_folds: {type: integer, default: 3}
+      window_length: {type: integer, default: 50}
+      num_boost_round: {type: integer, default: 10}
+      num_leaves: {type: integer, default: 10}
+      reg_lambda: {type: integer, default: 1}
+      max_depth: {type: integer, default: 20}
+    command: "python src/train.py {input_x_train_path}
+                                  {input_y_train_path}
+                                  --test_size={test_size}
+                                  --n_folds={n_folds}
+                                  --window_length={window_length}
+                                  --num_boost_round={num_boost_round}
+                                  --num_leaves={num_leaves}
+                                  --reg_lambda={reg_lambda}
+                                  --max_depth={max_depth}"
+
+  tune:
+    parameters:
+      input_x_train_path: {type: string, default: "data/model_input/x_train.csv"}
+      input_y_train_path: {type: string, default: "data/model_input/y_train.csv"}
+      test_size: {type: integer, default: 28}
+      n_folds: {type: integer, default: 3}
+    command: "python src/optimize_hyperparameters.py
+                     {input_x_train_path}
+                     {input_y_train_path}
+                     --test_size={test_size}
+                     --n_folds={n_folds}"
+
+# main:
